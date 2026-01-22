@@ -2,17 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repo') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/vdthirumurugan12-web/my-simple-website.git'
+                git 'https://github.com/your-username/my-website.git'
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to Apache') {
             steps {
                 sh '''
-                sudo cp -r * /var/www/html/
+                sudo rm -rf /var/www/html/*
+                sudo cp index.html style.css script.js /var/www/html/
                 '''
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                sh 'ls /var/www/html/'
             }
         }
     }
